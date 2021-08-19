@@ -31,6 +31,8 @@ require($main_controller);
 require($main_model);
 
 
+verify_token();
+
 
 
 
