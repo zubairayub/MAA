@@ -1,5 +1,7 @@
 <?php
 
+
+
 function get($name, $def= '')
 {
 	 return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $def;
@@ -18,6 +20,19 @@ if(isset($_GET['key']) && $_GET['key'] == $token){
 	return false;
 
 }
+
+	
+}
+
+
+
+
+function get_countries_list (){
+
+$conn = OpenCon();
+$rows  = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM `country`"));
+
+return $rows;
 
 	
 }
