@@ -11,7 +11,7 @@ function verify_token (){
 
 $token = '12341234';
 
-if(isset($_GET['key']) && $_GET['key'] == $token){
+if(isset($_POST['key']) && $_POST['key'] == $token){
 
   return true;
 
