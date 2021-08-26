@@ -46,7 +46,7 @@ return $return;
 function jsonencode ($data){
 
 
-if(!verify_token()){
+if(verify_token()){
 	if(!empty($data)){
 $myJSON = json_encode(['status' => 'true' , 'data' => $data , 'result' => 'Found']);
 }else{
