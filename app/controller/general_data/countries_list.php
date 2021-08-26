@@ -1,3 +1,3 @@
 <?php
-$data = get_countries_list();
+$return = get_countries_list();
 ?>

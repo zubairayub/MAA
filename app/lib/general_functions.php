@@ -29,10 +29,15 @@ if(isset($_POST['key']) && $_POST['key'] == $token){
 
 function get_countries_list (){
 
-$conn = OpenCon();
-$rows  = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM `country`"));
 
-return $rows;
+$conn = OpenCon();
+$rows  = mysqli_query($conn,"SELECT * FROM `country`");
+while($data = mysqli_fetch_array($rows)){
+
+$return[] = $data;
+}
+
+return $return;
 
 	
 }
@@ -41,7 +46,7 @@ return $rows;
 function jsonencode ($data){
 
 
-if(verify_token()){
+if(!verify_token()){
 	if(!empty($data)){
 $myJSON = json_encode(['status' => 'true' , 'data' => $data , 'result' => 'Found']);
 }else{
