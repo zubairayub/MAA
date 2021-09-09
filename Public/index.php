@@ -31,7 +31,10 @@ require($main_controller);
 require($main_model);
 
 
-verify_token();
+if(!verify_token()){
+$myJSON = json_encode(['status' => 'true' , 'data' => 'Token Mismatch' , 'result' => 'Not Found']); 
+print_r($myJSON);
+}
 
 
 
