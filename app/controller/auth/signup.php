@@ -1,6 +1,6 @@
 <?php
 $error = false;
-$data = verify_post($_GET);
+$data = verify_post($_POST);
 
 print_r($data);
 
