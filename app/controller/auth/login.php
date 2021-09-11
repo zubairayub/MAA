@@ -1,13 +1,22 @@
 <?php
-$conn = OpenCon();
-$rows  = mysqli_query($conn,"SELECT * FROM `users_info` ");
+$error = false;
+$data = verify_post($_GET);
 
-while($data = mysqli_fetch_assoc($rows)){
+if($data != false){
 
-$return[] = $data;
+
+
+$username = $data['username'];
+$password = $data['password'];
+
+
+
+$result = login_auth($username,$password);
+
+echo $result;
+
+
 
 }
-
-CloseCon($conn);
 
 ?>

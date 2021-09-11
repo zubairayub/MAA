@@ -126,6 +126,37 @@ CloseCon($conn);
 
 
 
+function login_auth($username,$password) {
+
+if(!empty($username)){
+
+$conn = OpenCon();
+$rows  = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM `users_info` WHERE `username` = '$username' or email = '$username' or `number` = '$username' "));
+
+if($rows > 0){
+
+
+echo 'found' ;
+
+}else{
+
+CloseCon($conn);
+    return true;
+}
+
+
+}else{
+    return false;
+}
+
+
+
+    
+}
+
+
+
+
 function insert($query) {
 
 if(!empty($query)){
