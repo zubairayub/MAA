@@ -123,30 +123,64 @@ CloseCon($conn);
     
 }
 
+function generate_session($user_id){
+  $conn = OpenCon();
+  $session_id = md5(microtime().$_SERVER['REMOTE_ADDR']);
 
+  $insert_session = mysqli_query($conn,"INSERT INTO `user_sessions` (`id`, `user_id`, `sess_key`, `datetime`, `isactive`, `updated_at`, `device_id`, `version`) VALUES (NULL, '$user_id', '$session_id', current_timestamp(), '1', NULL, NULL, NULL); ");
+
+ if($insert_session){
+return $session_id;
+ }else{
+    return false;
+ }
+}
 
 
 function login_auth($username,$password) {
 
 if(!empty($username)){
 
-$conn = OpenCon();
-$rows  = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM `users_info` WHERE `username` = '$username' or email = '$username' or `number` = '$username' "));
+        $conn = OpenCon();
+        $rows  = mysqli_query($conn,"SELECT * FROM `users_info` WHERE `username` = '$username' or email = '$username' or `number` = '$username' ");
 
-if($rows > 0){
+if(mysqli_num_rows($rows) > 0){
+$data = mysqli_fetch_assoc($rows);
+$hash_password = $data['password'];
 
 
-echo 'found' ;
+if (password_verify($password, $hash_password)) {
+    $user_id = $data['id'];
+  
+   $session_id = generate_session($user_id);
+    $data['session_id'] = $session_id;
+    if($session_id){
 
-}else{
+    jsonencode($data,'Found');
+   }else{
+    jsonencode(Null,'Error on session');
 
-CloseCon($conn);
-    return true;
+   }
+
+    exit();
+} else {
+    CloseCon($conn);
+    jsonencode(Null,'invalid password');
+    exit();
 }
 
 
 }else{
-    return false;
+
+    CloseCon($conn);
+    jsonencode(Null,'username cannot found');
+    exit();
+}
+
+
+}else{
+    jsonencode(Null,'username empty');
+    exit();
 }
 
 
