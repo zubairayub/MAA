@@ -28,13 +28,13 @@ if (file_exists($model)) {
 
 
 
-if(verify_token($_POST['token'])){
+if(!verify_token()){
 $myJSON = json_encode(['status' => 'true' , 'data' => 'Token Mismatch' , 'result' => 'Not Found']); 
 print_r($myJSON);
 }else{
 require($main_controller);
 require($main_model);
-
+    
 }
 
 
