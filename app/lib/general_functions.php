@@ -17,7 +17,7 @@ if(isset($_POST['key']) && $_POST['key'] == $token){
 
 }else{
 
-	return true;
+	return false;
 
 }
 
