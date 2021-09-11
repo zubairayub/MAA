@@ -64,6 +64,7 @@ if($username_available != 1){
 
 }else{
 
+$error = true;
 jsonencode(Null,'Cannot Veirfy Post Request');
 
 
