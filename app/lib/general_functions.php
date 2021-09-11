@@ -7,17 +7,17 @@ function get($name, $def= '')
 	 return isset($_REQUEST[$name]) ? $_REQUEST[$name] : $def;
 }
 
-function verify_token ($token){
+function verify_token (){
 
-$token_val = '12341234';
+$token = '12341234';
 
-if($token == $token_val){
+if(isset($_POST['key']) && $_POST['key'] == $token){
 
   return true;
 
 }else{
 
-	return false;
+	return true;
 
 }
 
