@@ -1,6 +1,8 @@
 <?php
-$error = false;
-$data = verify_post($_POST);
+$data = get_json_data();
+
+ $error = false;
+$data = verify_post($data);
 
 if($data != false){
 
