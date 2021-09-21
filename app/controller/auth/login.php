@@ -15,7 +15,7 @@ $version = $data['version'];
 
 
 
-$result = login_auth($username,$password);
+$result = login_auth($username,$password,$device_id,$version);
 
 echo $result;
 
