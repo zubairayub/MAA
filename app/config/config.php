@@ -14,6 +14,7 @@ $directory  = [
 'login' => 'auth/login',
 'countries_list' => 'general_data/countries_list',
 'signup' => 'auth/signup',
+'logout' => 'auth/logout',
 
 ];
 

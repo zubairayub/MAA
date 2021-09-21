@@ -10,6 +10,8 @@ if($data != false){
 
 $username = $data['username'];
 $password = $data['password'];
+$device_id = $data['device_id'];
+$version = $data['version'];
 
 
 

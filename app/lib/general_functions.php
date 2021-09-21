@@ -132,11 +132,11 @@ CloseCon($conn);
     
 }
 
-function generate_session($user_id){
+function generate_session($user_id,$device_id,$version){
   $conn = OpenCon();
   $session_id = md5(microtime().$_SERVER['REMOTE_ADDR']);
 
-  $insert_session = mysqli_query($conn,"INSERT INTO `user_sessions` (`id`, `user_id`, `sess_key`, `datetime`, `isactive`, `updated_at`, `device_id`, `version`) VALUES (NULL, '$user_id', '$session_id', current_timestamp(), '1', NULL, NULL, NULL); ");
+  $insert_session = mysqli_query($conn,"INSERT INTO `user_sessions` (`id`, `user_id`, `sess_key`, `datetime`, `isactive`, `updated_at`, `device_id`, `version`) VALUES (NULL, '$user_id', '$session_id', current_timestamp(), '1', NULL, '$device_id', '$version'); ");
 
  if($insert_session){
 return $session_id;
@@ -146,7 +146,41 @@ return $session_id;
 }
 
 
-function login_auth($username,$password) {
+function logout($session_id) {
+
+if(!empty($session_id)){
+
+        $conn = OpenCon();
+        $rows  = mysqli_query($conn,"SELECT * FROM `user_sessions` WHERE `sess_key` = '$session_id' and isactive = 1  ");
+
+    if(mysqli_num_rows($rows) > 0){
+
+$update =  mysqli_query($conn,"update `user_sessions` set isactive = '0' , updated_at = current_timestamp()  WHERE `sess_key` = '$session_id'  ");
+
+if($update){
+return true;
+}else{
+    return false;
+}
+
+    }else{
+        jsonencode(Null,'Session not found');
+         exit();
+    }
+
+
+
+
+    }else{
+         jsonencode(Null,'Session not found');
+         exit();
+
+    }
+
+}
+
+
+function login_auth($username,$password,$device_id,$version) {
 
 if(!empty($username)){
 
@@ -160,10 +194,12 @@ $hash_password = $data['password'];
 
 if (password_verify($password, $hash_password)) {
     $user_id = $data['id'];
-  
-   $session_id = generate_session($user_id);
+  if(!empty($device_id) && !empty($version)){
+$session_id = generate_session($user_id,$device_id,$version);
     $data['session_id'] = $session_id;
-    if($session_id){
+  
+  }
+     if($session_id){
 
     jsonencode($data,'Found');
    }else{
