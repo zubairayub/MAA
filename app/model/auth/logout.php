@@ -3,10 +3,11 @@ if(!empty($session_id)){
 
 if(logout($session_id)){
 
-
-	echo 'ok';
+ jsonencode($session_id,'Successfully logout');
+exit();
 }else{
-	echo 'false';
+	 jsonencode(null,'Something went wrong');
+	 exit();
 }
 
 
