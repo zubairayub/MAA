@@ -13,7 +13,7 @@ if($result){
 
 }
 else{
-	$myJSON = json_encode(['status' => 'true' , 'data' => 'Something Went wrong while inserting data' , 'result' => 'fail']); 
+	$myJSON = json_encode(['status' => 'false' , 'data' => 'Something Went wrong while inserting data' , 'result' => 'fail']); 
     
 }
 

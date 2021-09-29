@@ -335,7 +335,7 @@ function jsonencode ($data, $message = 'Not Found'){
 	if(!empty($data)){
 $myJSON = json_encode(['status' => 'true' , 'data' => $data , 'message' => 'Found']);
 }else{
-$myJSON = json_encode(['status' => 'true' , 'data' => 'No Data Found' , 'message' => $message ]);
+$myJSON = json_encode(['status' => 'false' , 'data' => 'No Data Found' , 'message' => $message ]);
 }
 
 
