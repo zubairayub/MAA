@@ -12,10 +12,11 @@ $username = $data['username'];
 $password = $data['password'];
 $device_id = $data['device_id'];
 $version = $data['version'];
+$ip_address = $data['ip_address'];
 
 
 
-$result = login_auth($username,$password,$device_id,$version);
+$result = login_auth($username,$password,$device_id,$version,$ip_address);
 
 echo $result;
 

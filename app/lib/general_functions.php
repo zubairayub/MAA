@@ -132,11 +132,11 @@ CloseCon($conn);
     
 }
 
-function generate_session($user_id,$device_id,$version){
+function generate_session($user_id,$device_id,$version,$ip_address){
   $conn = OpenCon();
   $session_id = md5(microtime().$_SERVER['REMOTE_ADDR']);
 
-  $insert_session = mysqli_query($conn,"INSERT INTO `user_sessions` (`id`, `user_id`, `sess_key`, `datetime`, `isactive`, `updated_at`, `device_id`, `version`) VALUES (NULL, '$user_id', '$session_id', current_timestamp(), '1', NULL, '$device_id', '$version'); ");
+  $insert_session = mysqli_query($conn,"INSERT INTO `user_sessions` (`id`, `user_id`, `sess_key`, `datetime`, `isactive`, `updated_at`, `device_id`, `version`,`ip_address`) VALUES (NULL, '$user_id', '$session_id', current_timestamp(), '1', NULL, '$device_id', '$version','$ip_address'); ");
 
  if($insert_session){
 return $session_id;
@@ -180,7 +180,7 @@ return true;
 }
 
 
-function login_auth($username,$password,$device_id,$version) {
+function login_auth($username,$password,$device_id,$version,$ip_address) {
 
 if(!empty($username)){
 
@@ -195,7 +195,7 @@ $hash_password = $data['password'];
 if (password_verify($password, $hash_password)) {
     $user_id = $data['id'];
   if(!empty($device_id) && !empty($version)){
-$session_id = generate_session($user_id,$device_id,$version);
+$session_id = generate_session($user_id,$device_id,$version,$ip_address);
     $data['session_id'] = $session_id;
   
   }
@@ -335,7 +335,7 @@ function jsonencode ($data, $message = 'Not Found'){
 	if(!empty($data)){
 $myJSON = json_encode(['status' => 'true' , 'data' => $data , 'message' => 'Found']);
 }else{
-$myJSON = json_encode(['status' => 'true' , 'data' => 'No Data Found' , 'message' => $message ]);
+$myJSON = json_encode(['status' => 'false' , 'data' => 'No Data Found' , 'message' => $message ]);
 }
 
 
