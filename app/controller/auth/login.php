@@ -2,7 +2,7 @@
 $data = get_json_data();
 
  $error = false;
-$data = verify_post($data);
+ $data = verify_post($data);
 
 if($data != false){
 
